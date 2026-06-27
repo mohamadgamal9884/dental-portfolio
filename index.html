@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dr. Aurelia Vance — Clinical Case Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#0e1014;
+    --bg-2:#15181f;
+    --panel:#1b1f28;
+    --line:rgba(199,167,108,.18);
+    --gold:#c7a76c;
+    --gold-2:#e3cf9e;
+    --gold-soft:rgba(199,167,108,.12);
+    --text:#ece8e1;
+    --muted:#9a958c;
+    --serif:'Cormorant Garamond',Georgia,serif;
+    --sans:'Jost',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    font-weight:300;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--gold);color:#0e1014}
+  .wrap{max-width:1220px;margin:0 auto;padding:0 32px}
+  .eyebrow{
+    font-size:12px;letter-spacing:.42em;text-transform:uppercase;
+    color:var(--gold);font-weight:500;
+  }
+  h1,h2,h3{font-family:var(--serif);font-weight:500;line-height:1.08;letter-spacing:.01em}
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:15px 32px;border:1px solid var(--gold);
+    color:var(--gold);font-size:12px;letter-spacing:.28em;text-transform:uppercase;
+    font-weight:500;transition:.45s cubic-bezier(.2,.7,.2,1);position:relative;overflow:hidden;
+  }
+  .btn span{position:relative;z-index:1}
+  .btn::after{content:"";position:absolute;inset:0;background:var(--gold);transform:translateY(101%);transition:.45s cubic-bezier(.2,.7,.2,1)}
+  .btn:hover{color:#0e1014}
+  .btn:hover::after{transform:translateY(0)}
+
+  /* NAV */
+  header.nav{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:22px 40px;transition:.4s;
+    background:linear-gradient(180deg,rgba(14,16,20,.85),rgba(14,16,20,0));
+  }
+  header.nav.scrolled{background:rgba(14,16,20,.92);backdrop-filter:blur(14px);padding:14px 40px;border-bottom:1px solid var(--line)}
+  .logo{display:flex;align-items:center;gap:12px;font-family:var(--serif);font-size:24px;letter-spacing:.02em}
+  .logo .mark{width:34px;height:34px;flex:none}
+  .logo b{font-weight:600;color:var(--gold-2)}
+  .navlinks{display:flex;gap:34px;align-items:center}
+  .navlinks a{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);transition:.3s;position:relative}
+  .navlinks a::after{content:"";position:absolute;left:0;bottom:-6px;height:1px;width:0;background:var(--gold);transition:.3s}
+  .navlinks a:hover{color:var(--text)}
+  .navlinks a:hover::after{width:100%}
+  .navlinks .navcta{border:1px solid var(--line);padding:9px 20px;color:var(--gold)}
+  .navlinks .navcta:hover{background:var(--gold-soft)}
+  .burger{display:none;flex-direction:column;gap:5px;cursor:pointer}
+  .burger span{width:26px;height:2px;background:var(--gold)}
+
+  /* HERO */
+  .hero{
+    min-height:100vh;display:flex;align-items:center;position:relative;
+    background:
+      radial-gradient(900px 600px at 78% 20%,rgba(199,167,108,.10),transparent 60%),
+      radial-gradient(700px 500px at 10% 90%,rgba(199,167,108,.06),transparent 60%),
+      var(--bg);
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";position:absolute;inset:0;
+    background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+    background-size:64px 64px;opacity:.25;mask-image:radial-gradient(circle at 70% 40%,#000,transparent 75%);
+  }
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;width:100%;position:relative;z-index:2;padding:120px 0 60px}
+  .hero h1{font-size:clamp(46px,6.6vw,92px);margin:22px 0 24px}
+  .hero h1 em{font-style:italic;color:var(--gold-2)}
+  .hero p.lead{color:var(--muted);font-size:18px;max-width:480px;margin-bottom:38px}
+  .hero-cta{display:flex;gap:16px;flex-wrap:wrap}
+  .hero-portrait{
+    position:relative;aspect-ratio:4/5;border:1px solid var(--line);
+    background:linear-gradient(160deg,var(--panel),#0d0f13);
+    display:flex;align-items:center;justify-content:center;overflow:hidden;
+  }
+  .hero-portrait .ring{position:absolute;inset:-1px;border:1px solid transparent;
+    background:linear-gradient(140deg,var(--gold),transparent 40%) border-box;-webkit-mask:linear-gradient(#000 0 0) padding-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+  .hero-portrait svg{width:62%;opacity:.85}
+  .hero-portrait .cap{position:absolute;bottom:18px;left:18px;font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--muted)}
+  .scrollcue{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);font-size:10px;letter-spacing:.3em;color:var(--muted);text-transform:uppercase;z-index:2;display:flex;flex-direction:column;align-items:center;gap:10px}
+  .scrollcue .l{width:1px;height:46px;background:linear-gradient(var(--gold),transparent)}
+
+  /* STATS */
+  .stats{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg-2)}
+  .stats .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding:46px 32px}
+  .stat{text-align:center}
+  .stat .n{font-family:var(--serif);font-size:48px;color:var(--gold-2);line-height:1}
+  .stat .t{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);margin-top:10px}
+
+  /* SECTION SHELL */
+  section.block{padding:110px 0}
+  .sec-head{max-width:680px;margin-bottom:54px}
+  .sec-head.center{margin:0 auto 60px;text-align:center}
+  .sec-head h2{font-size:clamp(34px,4.6vw,58px);margin:16px 0}
+  .sec-head p{color:var(--muted);font-size:17px}
+
+  /* ABOUT */
+  .about-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:64px;align-items:center}
+  .about-visual{aspect-ratio:1/1.08;border:1px solid var(--line);background:linear-gradient(160deg,var(--panel),#0c0e12);position:relative;display:flex;align-items:center;justify-content:center}
+  .about-visual svg{width:55%;opacity:.8}
+  .about-visual .badge{position:absolute;top:-1px;left:-1px;background:var(--gold);color:#0e1014;font-size:11px;letter-spacing:.2em;text-transform:uppercase;padding:10px 18px;font-weight:600}
+  .about-text h3{font-size:30px;margin-bottom:18px}
+  .about-text p{color:var(--muted);margin-bottom:18px}
+  .creds{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:30px}
+  .cred{border-left:1px solid var(--gold);padding-left:16px}
+  .cred b{font-family:var(--serif);font-size:20px;color:var(--text);font-weight:500}
+  .cred span{display:block;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+
+  /* CATEGORY FILTER */
+  .filterbar{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:50px}
+  .filterbar button{
+    background:transparent;border:1px solid var(--line);color:var(--muted);
+    font-family:var(--sans);font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+    padding:11px 22px;cursor:pointer;transition:.35s;font-weight:400;
+  }
+  .filterbar button.active,.filterbar button:hover{background:var(--gold);color:#0e1014;border-color:var(--gold)}
+
+  /* CATEGORY SECTIONS */
+  .cat{padding:96px 0;border-top:1px solid var(--line)}
+  .cat-head{display:flex;align-items:flex-end;justify-content:space-between;gap:30px;margin-bottom:42px;flex-wrap:wrap}
+  .cat-head .num{font-family:var(--serif);font-size:80px;color:var(--gold-soft);line-height:.7;letter-spacing:-.02em}
+  .cat-head .meta{flex:1;min-width:260px}
+  .cat-head h2{font-size:clamp(30px,4vw,50px);margin:6px 0}
+  .cat-head p{color:var(--muted);max-width:560px}
+  .cat-head .ico{width:54px;height:54px;color:var(--gold);flex:none}
+
+  /* GALLERY GRID */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .card{
+    position:relative;border:1px solid var(--line);overflow:hidden;cursor:pointer;
+    background:var(--panel);aspect-ratio:4/3.4;transition:.5s cubic-bezier(.2,.7,.2,1);
+  }
+  .card:hover{transform:translateY(-5px);border-color:var(--gold)}
+  .card .ba{position:absolute;inset:0;display:flex}
+  .card .ba .half{flex:1;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .card .ba .half svg{width:64%;opacity:.9;transition:.6s}
+  .card:hover .ba .half svg{transform:scale(1.06)}
+  .card .ba .half.before{background:linear-gradient(150deg,#23262f,#15171d)}
+  .card .ba .half.after{background:linear-gradient(150deg,#2a2722,#1a1813)}
+  .card .ba .lbl{position:absolute;top:10px;left:10px;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);background:rgba(14,16,20,.6);padding:3px 8px;border:1px solid var(--line)}
+  .card .ba .half.after .lbl{color:var(--gold-2)}
+  .card .divider{position:absolute;top:0;bottom:0;left:50%;width:1px;background:var(--gold);opacity:.4;z-index:2}
+  .card .info{
+    position:absolute;left:0;right:0;bottom:0;z-index:3;padding:16px 16px 14px;
+    background:linear-gradient(0deg,rgba(10,11,14,.96) 30%,rgba(10,11,14,0));
+  }
+  .card .info .tag{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+  .card .info h4{font-family:var(--serif);font-size:21px;font-weight:500;margin:4px 0 2px;color:var(--text)}
+  .card .info small{color:var(--muted);font-size:12px;letter-spacing:.04em}
+  .card .expand{position:absolute;top:12px;right:12px;z-index:3;width:30px;height:30px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--gold);background:rgba(14,16,20,.55);opacity:0;transition:.4s}
+  .card:hover .expand{opacity:1}
+
+  /* LIGHTBOX */
+  .lb{position:fixed;inset:0;z-index:100;background:rgba(8,9,12,.93);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;padding:30px}
+  .lb.open{display:flex}
+  .lb-inner{max-width:1000px;width:100%;background:var(--bg-2);border:1px solid var(--line);display:grid;grid-template-columns:1.15fr .85fr;max-height:88vh;overflow:hidden}
+  .lb-visual{position:relative;display:flex;background:#0c0e12}
+  .cmp{position:relative;width:100%;min-height:380px;overflow:hidden;background:#0c0e12;user-select:none;touch-action:none;cursor:ew-resize}
+  .cmp-layer{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+  .cmp-layer.before{background:linear-gradient(150deg,#23262f,#15171d);clip-path:inset(0 50% 0 0);transition:clip-path .18s ease;will-change:clip-path}
+  .cmp-layer.after{background:linear-gradient(150deg,#2a2722,#1a1813)}
+  .cmp.dragging .cmp-layer.before{transition:none}
+  .cmp-img{width:46%;display:block}
+  .cmp-img svg{width:100%}
+  .cmp .lbl{position:absolute;top:14px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);background:rgba(14,16,20,.6);padding:4px 10px;border:1px solid var(--line);z-index:4}
+  .cmp-layer.before .lbl{left:14px}
+  .cmp-layer.after .lbl{right:14px;color:var(--gold-2)}
+  .cmp-handle{position:absolute;top:0;bottom:0;left:50%;width:2px;background:var(--gold);transform:translateX(-1px);z-index:5;pointer-events:none;transition:left .18s ease;will-change:left}
+  .cmp.dragging .cmp-handle{transition:none}
+  .cmp-knob{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:46px;height:46px;border-radius:50%;background:var(--gold);color:#0e1014;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 6px 24px rgba(0,0,0,.45);border:2px solid var(--bg-2)}
+  .lb-body{padding:40px 38px;overflow-y:auto}
+  .lb-body .tag{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+  .lb-body h3{font-size:34px;margin:10px 0 14px}
+  .lb-body p{color:var(--muted);font-size:15px;margin-bottom:22px}
+  .lb-body .specs{border-top:1px solid var(--line)}
+  .lb-body .specs div{display:flex;justify-content:space-between;gap:20px;padding:13px 0;border-bottom:1px solid var(--line);font-size:13px}
+  .lb-body .specs div span:first-child{color:var(--muted);letter-spacing:.12em;text-transform:uppercase;font-size:11px}
+  .lb-body .specs div span:last-child{color:var(--text);text-align:right}
+  .lb-close{position:absolute;top:18px;right:22px;z-index:5;width:42px;height:42px;border:1px solid var(--line);background:rgba(14,16,20,.6);color:var(--gold);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.3s}
+  .lb-close:hover{background:var(--gold);color:#0e1014}
+
+  /* TESTIMONIAL */
+  .quote{background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .quote .wrap{text-align:center;padding:96px 32px}
+  .quote .q{font-family:var(--serif);font-style:italic;font-size:clamp(26px,3.6vw,42px);line-height:1.32;max-width:900px;margin:24px auto 26px}
+  .quote .q em{color:var(--gold-2)}
+  .quote .who{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+
+  /* CONTACT / CTA */
+  .cta{position:relative;overflow:hidden;
+    background:radial-gradient(700px 400px at 50% -10%,rgba(199,167,108,.14),transparent 60%),var(--bg)}
+  .cta .wrap{text-align:center;padding:120px 32px}
+  .cta h2{font-size:clamp(38px,5.4vw,72px);margin:18px 0 22px}
+  .cta h2 em{font-style:italic;color:var(--gold-2)}
+  .cta p{color:var(--muted);max-width:520px;margin:0 auto 38px;font-size:17px}
+  .contactrow{display:flex;gap:40px;justify-content:center;flex-wrap:wrap;margin-top:54px}
+  .contactrow .ci{font-size:13px;letter-spacing:.06em;color:var(--muted)}
+  .contactrow .ci b{display:block;font-family:var(--serif);font-size:20px;color:var(--text);font-weight:500;margin-bottom:4px}
+
+  footer{border-top:1px solid var(--line);padding:34px 32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+  footer .logo{font-size:20px}
+  footer small{color:var(--muted);font-size:12px;letter-spacing:.08em}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(28px);transition:.9s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  @media(max-width:900px){
+    .hero-grid{grid-template-columns:1fr}
+    .hero-portrait{display:none}
+    .about-grid{grid-template-columns:1fr;gap:40px}
+    .grid{grid-template-columns:repeat(2,1fr)}
+    .lb-inner{grid-template-columns:1fr;max-height:92vh}
+    .stats .wrap{grid-template-columns:1fr 1fr;gap:34px}
+    .navlinks{display:none}
+    .burger{display:flex}
+  }
+  @media(max-width:560px){
+    .wrap{padding:0 20px}
+    .grid{grid-template-columns:1fr}
+    header.nav{padding:16px 20px}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav" id="nav">
+  <a href="#top" class="logo">
+    <svg class="mark" viewBox="0 0 40 40" fill="none"><path d="M20 5c-5 0-7 3-7 3s-2-3-6-2c-3 .8-4 4-3 9 .7 3.6 1.6 6 2.4 11 .5 3.2 1.2 7 3 7 2 0 1.8-5 3.2-7.5C16.4 30 18 29 20 29s3.6 1 5.4 4.5C26.8 36 26.6 41 28.6 41c1.8 0 2.5-3.8 3-7 .8-5 1.7-7.4 2.4-11 1-5 0-8.2-3-9-4-1.1-6 2-6 2s-2-3-5-3z" fill="#c7a76c" opacity=".92"/></svg>
+    <span>Dr.&nbsp;<b>Aurelia&nbsp;Vance</b></span>
+  </a>
+  <nav class="navlinks">
+    <a href="#about">About</a>
+    <a href="#operative">Operative</a>
+    <a href="#endo">Endodontics</a>
+    <a href="#fixed">Fixed</a>
+    <a href="#removable">Removable</a>
+    <a href="#surgery">Surgery</a>
+    <a href="#contact" class="navcta">Book a Consult</a>
+  </nav>
+  <div class="burger" onclick="document.querySelector('.navlinks').style.display = (getComputedStyle(document.querySelector('.navlinks')).display==='none'?'flex':'none')"><span></span><span></span><span></span></div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div class="reveal in">
+      <div class="eyebrow">Clinical Case Portfolio · Est. 2012</div>
+      <h1>The Art &amp;<br>Science of the <em>Restored</em> Smile</h1>
+      <p class="lead">A curated record of restorative, endodontic, prosthetic and surgical cases — documented case by case, with the precision and discretion my patients expect.</p>
+      <div class="hero-cta">
+        <a href="#operative" class="btn"><span>View Case Gallery</span></a>
+        <a href="#contact" class="btn" style="border-color:var(--line)"><span>Book a Consult</span></a>
+      </div>
+    </div>
+    <div class="hero-portrait reveal in">
+      <div class="ring"></div>
+      <svg viewBox="0 0 200 240" fill="none"><circle cx="100" cy="80" r="46" stroke="#c7a76c" stroke-width="1.2" opacity=".5"/><path d="M100 35c-14 0-20 8-20 8s-6-8-16-5c-8 2.5-10 11-8 23 2 12 4 14 6 27 1.4 9 3 18 8 18 5 0 4.5-13 8-19 2.5-4.3 6-7 14-7s11.5 2.7 14 7c3.5 6 3 19 8 19 5 0 6.6-9 8-18 2-13 4-15 6-27 2-12 0-20.5-8-23-10-3-16 5-16 5s-6-8-20-8z" fill="#c7a76c" opacity=".9"/><text x="100" y="205" text-anchor="middle" fill="#9a958c" font-family="Cormorant Garamond" font-size="15" letter-spacing="3">DR. A. VANCE · DDS, MSc</text></svg>
+      <div class="cap">Replace with your portrait or signature smile case</div>
+    </div>
+  </div>
+  <div class="scrollcue"><div class="l"></div>Scroll</div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="wrap">
+    <div class="stat reveal"><div class="n">2,400+</div><div class="t">Cases Treated</div></div>
+    <div class="stat reveal"><div class="n">13</div><div class="t">Years in Practice</div></div>
+    <div class="stat reveal"><div class="n">5</div><div class="t">Clinical Disciplines</div></div>
+    <div class="stat reveal"><div class="n">98%</div><div class="t">Patient Satisfaction</div></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="block" id="about">
+  <div class="wrap about-grid">
+    <div class="about-visual reveal">
+      <div class="badge">The Practitioner</div>
+      <svg viewBox="0 0 200 200" fill="none"><rect x="20" y="20" width="160" height="160" stroke="#c7a76c" stroke-width="1" opacity=".3"/><path d="M100 55c-12 0-17 7-17 7s-5-7-13-4.5c-7 2-8.5 9-7 19 1.6 10 3.3 12 5 22 1.2 7.5 2.6 15 6.5 15 4 0 3.7-10.5 6.5-15.5 2-3.6 5-5.5 12-5.5s10 1.9 12 5.5c2.8 5 2.5 15.5 6.5 15.5 4 0 5.3-7.5 6.5-15 1.7-10 3.4-12 5-22 1.6-10 0-17-7-19-8-2.5-13 4.5-13 4.5s-5-7-17-7z" fill="#c7a76c" opacity=".85"/></svg>
+    </div>
+    <div class="about-text reveal">
+      <div class="eyebrow">About</div>
+      <h3>Restorative dentistry, treated as a discipline of detail.</h3>
+      <p>This portfolio is a living archive of my clinical work across five disciplines — every case photographed, documented and presented with the same standards I hold in the operatory. It exists to give referring colleagues, prospective patients and partners a transparent view of outcomes.</p>
+      <p>Replace this copy with your own philosophy, training and approach. Every name, figure and image on this page is placeholder content, ready for you to make it unmistakably yours.</p>
+      <div class="creds">
+        <div class="cred"><b>DDS · MSc Pros.</b><span>Education</span></div>
+        <div class="cred"><b>Board Certified</b><span>Credential</span></div>
+        <div class="cred"><b>Digital Workflow</b><span>Approach</span></div>
+        <div class="cred"><b>Microscope-Led</b><span>Technique</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FILTER + GALLERIES -->
+<section class="block" style="padding-top:30px">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <div class="eyebrow">Case Gallery</div>
+      <h2>Five Disciplines. One Standard.</h2>
+      <p>Browse documented before-and-after cases by category. Each tile opens to the full case detail.</p>
+    </div>
+    <div class="filterbar reveal">
+      <button class="active" data-f="all">All</button>
+      <button data-f="operative">Operative</button>
+      <button data-f="endo">Endodontics</button>
+      <button data-f="fixed">Fixed Pros.</button>
+      <button data-f="removable">Removable Pros.</button>
+      <button data-f="surgery">Surgery</button>
+    </div>
+  </div>
+
+  <!-- OPERATIVE -->
+  <div class="cat" id="operative" data-cat="operative">
+    <div class="wrap">
+      <div class="cat-head reveal">
+        <div class="num">01</div>
+        <svg class="ico" viewBox="0 0 48 48" fill="none"><path d="M24 8c-7 0-10 4-10 4s-3-4-7-2.5C2.5 11 1 17 3 25c1.5 6 2.5 8 4 15 .8 4 2 6 4 6 3 0 3-7 5-11 1.4-2.8 4-4 8-4s6.6 1.2 8 4c2 4 2 11 5 11 2 0 3.2-2 4-6 1.5-7 2.5-9 4-15 2-8 .5-14-4-15.5-4-1.3-7 2.5-7 2.5s-3-4-10-4z" stroke="currentColor" stroke-width="1.4"/></svg>
+        <div class="meta"><div class="eyebrow">Conservative &amp; Aesthetic</div><h2>Operative Dentistry</h2><p>Direct composites, minimally invasive restorations and shade-matched anterior work that disappears into the natural dentition.</p></div>
+      </div>
+      <div class="grid" data-grid></div>
+    </div>
+  </div>
+
+  <!-- ENDO -->
+  <div class="cat" id="endo" data-cat="endo">
+    <div class="wrap">
+      <div class="cat-head reveal">
+        <div class="num">02</div>
+        <svg class="ico" viewBox="0 0 48 48" fill="none"><path d="M24 6c-6 0-9 4-9 4l-2 22c-.4 5 2 12 5 12s2-8 6-8 3 8 6 8 5.4-7 5-12l-2-22s-3-4-9-4z" stroke="currentColor" stroke-width="1.4"/><path d="M24 14v22" stroke="currentColor" stroke-width="1.2" stroke-dasharray="2 3"/></svg>
+        <div class="meta"><div class="eyebrow">Microscope Endodontics</div><h2>Endodontics</h2><p>Root canal therapy, retreatments and apical surgery — preserving natural teeth that others would extract.</p></div>
+      </div>
+      <div class="grid" data-grid></div>
+    </div>
+  </div>
+
+  <!-- FIXED -->
+  <div class="cat" id="fixed" data-cat="fixed">
+    <div class="wrap">
+      <div class="cat-head reveal">
+        <div class="num">03</div>
+        <svg class="ico" viewBox="0 0 48 48" fill="none"><rect x="9" y="16" width="30" height="16" rx="3" stroke="currentColor" stroke-width="1.4"/><path d="M16 16v16M24 16v16M32 16v16" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="meta"><div class="eyebrow">Crowns · Veneers · Bridges</div><h2>Fixed Prosthodontics</h2><p>Ceramic veneers, full-coverage crowns and implant-supported bridges, designed digitally and finished by hand.</p></div>
+      </div>
+      <div class="grid" data-grid></div>
+    </div>
+  </div>
+
+  <!-- REMOVABLE -->
+  <div class="cat" id="removable" data-cat="removable">
+    <div class="wrap">
+      <div class="cat-head reveal">
+        <div class="num">04</div>
+        <svg class="ico" viewBox="0 0 48 48" fill="none"><path d="M10 20c0-4 6-6 14-6s14 2 14 6c0 6-4 14-8 14-2 0-3-3-6-3s-4 3-6 3c-4 0-8-8-8-14z" stroke="currentColor" stroke-width="1.4"/></svg>
+        <div class="meta"><div class="eyebrow">Dentures &amp; Partials</div><h2>Removable Prosthodontics</h2><p>Complete dentures, precision partials and overdentures that restore function, profile and confidence.</p></div>
+      </div>
+      <div class="grid" data-grid></div>
+    </div>
+  </div>
+
+  <!-- SURGERY -->
+  <div class="cat" id="surgery" data-cat="surgery">
+    <div class="wrap">
+      <div class="cat-head reveal">
+        <div class="num">05</div>
+        <svg class="ico" viewBox="0 0 48 48" fill="none"><path d="M30 8l10 10-18 18-10 2 2-10L30 8z" stroke="currentColor" stroke-width="1.4"/><path d="M26 12l10 10" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="meta"><div class="eyebrow">Implants &amp; Oral Surgery</div><h2>Oral Surgery</h2><p>Implant placement, guided bone regeneration and atraumatic extractions — the surgical foundation for lasting restorations.</p></div>
+      </div>
+      <div class="grid" data-grid></div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<section class="quote">
+  <div class="wrap reveal">
+    <div class="eyebrow">In Their Words</div>
+    <div class="q">“I came in hiding my smile and left unable to stop showing it. The work was <em>meticulous</em>, the experience effortless.”</div>
+    <div class="who">— Replace with a real patient testimonial</div>
+  </div>
+</section>
+
+<!-- CTA / CONTACT -->
+<section class="cta" id="contact">
+  <div class="wrap reveal">
+    <div class="eyebrow">Begin</div>
+    <h2>Let's design your <em>next</em> case.</h2>
+    <p>Whether you're a patient considering treatment or a colleague seeking a referral partner, I'd be glad to talk.</p>
+    <a href="#" class="btn"><span>Request a Consultation</span></a>
+    <div class="contactrow">
+      <div class="ci"><b>The Practice</b>123 Placeholder Avenue<br>Your City, ST 00000</div>
+      <div class="ci"><b>Direct</b>+1 (000) 000-0000<br>hello@yourpractice.com</div>
+      <div class="ci"><b>Hours</b>Mon–Fri · 8–5<br>By appointment</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="logo"><span>Dr.&nbsp;<b style="color:var(--gold-2);font-weight:600">Aurelia&nbsp;Vance</b></span></div>
+  <small>© 2026 · Clinical Case Portfolio · Demo template — all content is placeholder</small>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lb" id="lb">
+  <div class="lb-inner">
+    <button class="lb-close" onclick="closeLB()">×</button>
+    <div class="lb-visual">
+      <div class="cmp" id="cmp">
+        <div class="cmp-layer after"><span class="lbl">After</span><span class="cmp-img" id="lbAfter"></span></div>
+        <div class="cmp-layer before" id="cmpBefore"><span class="lbl">Before</span><span class="cmp-img" id="lbBefore"></span></div>
+        <div class="cmp-handle" id="cmpHandle"><div class="cmp-knob">⟷</div></div>
+      </div>
+    </div>
+    <div class="lb-body">
+      <div class="tag" id="lbTag"></div>
+      <h3 id="lbTitle"></h3>
+      <p id="lbDesc"></p>
+      <div class="specs" id="lbSpecs"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ---------- tooth motif generator (varied placeholder visuals) ---------- */
+function tooth(seed, gold){
+  const c = gold ? '#e3cf9e' : '#6b6f78';
+  const o = gold ? .95 : .7;
+  const r = 30 + (seed*13)%18;
+  return `<svg viewBox="0 0 120 120" fill="none"><circle cx="60" cy="58" r="${r}" stroke="${c}" stroke-width="1" opacity=".3"/><path d="M60 26c-9 0-13 5-13 5s-4-5-10-3c-5 1.6-6 7-5 14 1.2 8 2.5 9 3.6 17 .9 6 2 11 5 11 3 0 2.8-8 5-12 1.5-2.7 4-4 8.4-4s6.9 1.3 8.4 4c2.2 4 2 12 5 12 3 0 4.1-5 5-11 1.1-8 2.4-9 3.6-17 1-7 0-12.4-5-14-6-2-10 3-10 3s-4-5-13-5z" fill="${c}" opacity="${o}"/></svg>`;
+}
+
+/* ---------- case data ---------- */
+const CASES = {
+  operative:[
+    {t:"Anterior Diastema Closure",sub:"Direct composite · #8–9",d:"A midline diastema closed conservatively with layered nanohybrid composite, restoring symmetry without any tooth preparation.",specs:{Technique:"Freehand direct composite",Material:"Nanohybrid · A1/B1",Visits:"1 visit · 90 min",Longevity:"Reversible, additive"}},
+    {t:"Class IV Fracture Repair",sub:"Trauma · #9",d:"An incisal-edge fracture rebuilt with polychromatic layering and a custom incisal halo to mimic the adjacent tooth.",specs:{Technique:"Stratified layering",Material:"Composite + tints",Visits:"1 visit",Result:"Invisible margin"}},
+    {t:"Posterior Composite Overhaul",sub:"Replacing amalgam · #14",d:"Failing amalgam removed and replaced with a bonded, anatomically sculpted composite restoration.",specs:{Technique:"Bonded direct restoration",Material:"Bulk-fill + capping layer",Visits:"1 visit",Benefit:"Mercury-free, conservative"}},
+    {t:"Smile Edge Recontouring",sub:"Enameloplasty + bonding",d:"Worn incisal edges reshaped and refreshed with minimal bonding for a younger, even smile line.",specs:{Technique:"Additive bonding",Material:"Micro-hybrid composite",Visits:"1 visit",Prep:"Minimal"}},
+    {t:"Cervical Lesion Restoration",sub:"Abfraction · #5–6",d:"Non-carious cervical lesions restored to halt sensitivity and protect exposed root surfaces.",specs:{Technique:"Flowable + sculptable",Material:"Hybrid composite",Visits:"1 visit",Outcome:"Sensitivity resolved"}},
+    {t:"Single-Visit Aesthetic Bond",sub:"Peg lateral build-up",d:"An undersized lateral incisor built to ideal proportions in a single appointment.",specs:{Technique:"Direct build-up",Material:"Composite",Visits:"1 visit",Note:"No anaesthetic needed"}},
+  ],
+  endo:[
+    {t:"Molar Root Canal Therapy",sub:"Irreversible pulpitis · #30",d:"Four-canal molar treated under the microscope with warm vertical obturation and a definitive core.",specs:{Diagnosis:"Irreversible pulpitis",Canals:"4 located & shaped",Obturation:"Warm vertical",Magnification:"Microscope-led"}},
+    {t:"Endodontic Retreatment",sub:"Failed prior RCT · #19",d:"Previous root filling removed, missed canal located and the system re-disinfected to resolve a persistent lesion.",specs:{Reason:"Periapical lesion",Finding:"Missed MB2 canal",Outcome:"Healing at 6 mo",Tech:"Ultrasonic retreatment"}},
+    {t:"Apicoectomy",sub:"Surgical endo · #8",d:"Apical surgery with root-end resection and bioceramic retrofill where orthograde access was limited.",specs:{Procedure:"Root-end resection",Retrofill:"Bioceramic",Approach:"Microsurgical",Result:"Lesion resolved"}},
+    {t:"Vital Pulp Therapy",sub:"Deep caries · #14",d:"A direct pulp cap with bioactive cement preserved pulp vitality and avoided full root canal therapy.",specs:{Technique:"Direct pulp cap",Material:"Calcium silicate",Goal:"Preserve vitality",Visits:"1 visit"}},
+    {t:"Calcified Canal Negotiation",sub:"Complex anatomy · #4",d:"A heavily calcified canal negotiated under high magnification and shaped to length.",specs:{Challenge:"Calcified canal",Aid:"Microscope + CBCT",Result:"Patency to apex",Tech:"Hand + rotary"}},
+    {t:"Trauma Pulp Management",sub:"Avulsion follow-up · #9",d:"Staged endodontic management following dental trauma to maintain the natural tooth.",specs:{Context:"Post-trauma",Plan:"Staged therapy",Medicament:"Calcium hydroxide",Outcome:"Tooth retained"}},
+  ],
+  fixed:[
+    {t:"Porcelain Veneers · 8 Units",sub:"Smile makeover",d:"Eight feldspathic veneers designed from a digital wax-up to reshape proportion, shade and symmetry.",specs:{Units:"8 veneers (#5–12)",Material:"Feldspathic porcelain",Workflow:"Digital wax-up + mock-up",Prep:"Minimal, enamel-bound"}},
+    {t:"All-Ceramic Crown",sub:"Cracked tooth · #19",d:"A monolithic zirconia crown restoring a cracked molar with a precise, biologically respectful margin.",specs:{Material:"Monolithic zirconia",Margin:"Supragingival",Workflow:"Intraoral scan · same-week",Fit:"Verified microscopically"}},
+    {t:"Implant-Supported Crown",sub:"Single tooth · #8",d:"A screw-retained ceramic crown on an anterior implant, contoured for an ideal emergence profile.",specs:{Retention:"Screw-retained",Material:"Zirconia on Ti-base",Focus:"Emergence profile",Esthetics:"Gingival harmony"}},
+    {t:"3-Unit Bridge",sub:"Replacing #4 · canine to premolar",d:"A fixed bridge restoring a missing premolar with shade-blended pontic and hygienic ovate design.",specs:{Span:"3 units",Pontic:"Modified ridge-lap",Material:"Layered zirconia",Outcome:"Function restored"}},
+    {t:"Full-Arch Rehabilitation",sub:"Worn dentition reconstruction",d:"A complete fixed reconstruction restoring vertical dimension and a refreshed, durable smile.",specs:{Scope:"Full-arch fixed",Material:"Lithium disilicate + zirconia",Planning:"Digital, mock-up driven",Goal:"VDO + esthetics"}},
+    {t:"Anterior Crown Lengthening + Crowns",sub:"Gummy smile correction",d:"Combined soft-tissue contouring and ceramic crowns to balance a high lip line and short clinical crowns.",specs:{Combined:"Perio + restorative",Material:"E.max crowns",Result:"Balanced gingival line",Visits:"Staged"}},
+  ],
+  removable:[
+    {t:"Complete Upper & Lower Dentures",sub:"Full edentulism",d:"A fully edentulous patient rehabilitated with balanced complete dentures restoring profile and function.",specs:{Type:"Complete dentures",Teeth:"Anatomic acrylic",Focus:"Phonetics + esthetics",Fit:"Balanced occlusion"}},
+    {t:"Cobalt-Chrome Partial",sub:"Kennedy Class I",d:"A precision cast partial denture with discreet clasping to replace posterior teeth while protecting abutments.",specs:{Framework:"Cobalt-chrome",Class:"Kennedy I",Clasps:"Esthetic placement",Comfort:"Rigid, low-profile"}},
+    {t:"Implant Overdenture",sub:"2-implant locator",d:"A lower overdenture stabilised on two implants with locator attachments — dramatically improved retention.",specs:{Support:"2 implants",Attachment:"Locator",Benefit:"Retention + chewing",Removable:"Yes, patient-friendly"}},
+    {t:"Flexible Partial Denture",sub:"Anterior · metal-free",d:"A flexible, clasp-free partial replacing anterior teeth with natural-looking gum-toned margins.",specs:{Material:"Thermoplastic nylon",Clasps:"Tooth-coloured",Esthetics:"High",Use:"Lightweight"}},
+    {t:"Immediate Denture",sub:"Same-day delivery",d:"An immediate denture delivered at the extraction visit so the patient never went without teeth.",specs:{Timing:"Delivered at extraction",Benefit:"No edentulous period",Plan:"Reline after healing",Outcome:"Seamless transition"}},
+    {t:"Denture Reline & Refresh",sub:"Comfort restoration",d:"An existing denture relined and polished to restore fit and comfort after ridge resorption.",specs:{Service:"Reline + adjust",Material:"Hard reline",Result:"Restored fit",Visits:"1 visit"}},
+  ],
+  surgery:[
+    {t:"Single Implant Placement",sub:"Guided surgery · #30",d:"A posterior implant placed with a surgical guide for ideal angulation and primary stability.",specs:{Approach:"Fully guided",Implant:"Ti, 4.3×10mm",Stability:"Primary achieved",Restoration:"Staged crown"}},
+    {t:"Immediate Implant + Bone Graft",sub:"Extraction site · #8",d:"Atraumatic extraction followed by immediate implant placement and socket grafting to preserve the ridge.",specs:{Technique:"Immediate placement",Graft:"Socket preservation",Goal:"Ridge maintenance",Esthetics:"Anterior zone"}},
+    {t:"Guided Bone Regeneration",sub:"Ridge augmentation",d:"A deficient ridge rebuilt with particulate graft and a resorbable membrane to support future implants.",specs:{Procedure:"GBR",Material:"Xenograft + membrane",Healing:"4–6 months",Outcome:"Implant-ready ridge"}},
+    {t:"Surgical Wisdom Tooth Removal",sub:"Impacted #17",d:"A deeply impacted third molar removed with a conservative, atraumatic surgical approach.",specs:{Type:"Surgical extraction",Impaction:"Mesioangular",Technique:"Sectioned, atraumatic",Recovery:"Uneventful"}},
+    {t:"Sinus Lift",sub:"Posterior maxilla",d:"A lateral-window sinus augmentation creating bone height for implant placement in the upper jaw.",specs:{Procedure:"Lateral window",Graft:"Composite graft",Aim:"Vertical bone gain",Stage:"Pre-implant"}},
+    {t:"Soft-Tissue Graft",sub:"Recession coverage",d:"A connective-tissue graft covering exposed roots, improving esthetics and reducing sensitivity.",specs:{Procedure:"CT graft",Indication:"Gingival recession",Result:"Root coverage",Benefit:"Esthetic + comfort"}},
+  ],
+};
+
+const TAGS={operative:"Operative",endo:"Endodontics",fixed:"Fixed Prosthodontics",removable:"Removable Prosthodontics",surgery:"Oral Surgery"};
+
+/* ---------- build grids ---------- */
+let sid=0;
+document.querySelectorAll('.cat').forEach(cat=>{
+  const key=cat.dataset.cat;
+  const grid=cat.querySelector('[data-grid]');
+  CASES[key].forEach((cse,i)=>{
+    const id=sid++;
+    const el=document.createElement('div');
+    el.className='card';
+    el.dataset.cat=key;
+    el.innerHTML=`
+      <div class="ba">
+        <div class="half before"><span class="lbl">Before</span>${tooth(id+1,false)}</div>
+        <div class="half after"><span class="lbl">After</span>${tooth(id+3,true)}</div>
+      </div>
+      <div class="divider"></div>
+      <div class="expand">＋</div>
+      <div class="info"><div class="tag">${TAGS[key]}</div><h4>${cse.t}</h4><small>${cse.sub}</small></div>`;
+    el.addEventListener('click',()=>openLB(key,cse,id));
+    grid.appendChild(el);
+  });
+});
+
+/* ---------- lightbox ---------- */
+const lb=document.getElementById('lb');
+function openLB(key,cse,id){
+  document.getElementById('lbBefore').innerHTML=tooth(id+1,false);
+  document.getElementById('lbAfter').innerHTML=tooth(id+3,true);
+  document.getElementById('lbTag').textContent=TAGS[key];
+  document.getElementById('lbTitle').textContent=cse.t;
+  document.getElementById('lbDesc').textContent=cse.d;
+  const sp=document.getElementById('lbSpecs');sp.innerHTML='';
+  Object.entries(cse.specs).forEach(([k,v])=>{
+    const d=document.createElement('div');d.innerHTML=`<span>${k}</span><span>${v}</span>`;sp.appendChild(d);
+  });
+  lb.classList.add('open');document.body.style.overflow='hidden';
+  introSweep();
+}
+function closeLB(){lb.classList.remove('open');document.body.style.overflow='';}
+
+/* ---------- before/after comparison slider ---------- */
+const cmp=document.getElementById('cmp'),cmpBefore=document.getElementById('cmpBefore'),cmpHandle=document.getElementById('cmpHandle');
+let curPos=50,targetPos=50,rectCache=null,rafId=null,dragging=false;
+function render(){cmpBefore.style.clipPath=`inset(0 ${(100-curPos).toFixed(2)}% 0 0)`;cmpHandle.style.left=curPos+'%';rafId=null;}
+function queue(p){curPos=p<2?2:p>98?98:p;if(rafId===null)rafId=requestAnimationFrame(render);}
+function posFromEvent(e){const r=rectCache||(rectCache=cmp.getBoundingClientRect());const x=(e.clientX!=null?e.clientX:e.touches[0].clientX)-r.left;return x/r.width*100;}
+function startDrag(e){dragging=true;rectCache=cmp.getBoundingClientRect();cmp.classList.add('dragging');if(e.pointerId!=null){try{cmp.setPointerCapture(e.pointerId)}catch(_){}}queue(posFromEvent(e));}
+function moveDrag(e){if(!dragging)return;e.preventDefault();queue(posFromEvent(e));}
+function endDrag(){dragging=false;rectCache=null;cmp.classList.remove('dragging');}
+function introSweep(){cmp.classList.remove('dragging');curPos=100;render();requestAnimationFrame(()=>requestAnimationFrame(()=>queue(50)));}
+cmp.addEventListener('pointerdown',startDrag);
+cmp.addEventListener('pointermove',moveDrag);
+cmp.addEventListener('pointerup',endDrag);
+cmp.addEventListener('pointercancel',endDrag);
+window.addEventListener('resize',()=>{if(!dragging)rectCache=null;});
+lb.addEventListener('click',e=>{if(e.target===lb)closeLB();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLB();});
+
+/* ---------- filter ---------- */
+document.querySelectorAll('.filterbar button').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('.filterbar button').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    const f=b.dataset.f;
+    document.querySelectorAll('.cat').forEach(c=>{
+      c.style.display=(f==='all'||c.dataset.cat===f)?'':'none';
+    });
+    if(f!=='all'){const t=document.getElementById(f);if(t)window.scrollTo({top:t.offsetTop-80,behavior:'smooth'});}
+  });
+});
+
+/* ---------- nav + reveal ---------- */
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40));
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
