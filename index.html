@@ -235,8 +235,24 @@
     .grid{grid-template-columns:repeat(2,1fr)}
     .lb-inner{grid-template-columns:1fr;max-height:92vh}
     .stats .wrap{grid-template-columns:1fr 1fr;gap:34px}
-    .navlinks{display:none}
     .burger{display:flex}
+    .navlinks{
+      flex-direction:column;align-items:stretch;gap:0;
+      position:absolute;top:100%;left:0;right:0;
+      background:rgba(14,16,20,.98);backdrop-filter:blur(16px);
+      border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+      padding:6px 0;max-height:0;overflow:hidden;opacity:0;pointer-events:none;
+      transition:max-height .4s cubic-bezier(.2,.7,.2,1),opacity .3s ease;
+    }
+    header.nav.menu-open .navlinks{max-height:78vh;opacity:1;pointer-events:auto}
+    .navlinks a{width:100%;padding:16px 32px;font-size:13px;letter-spacing:.18em;color:var(--text);border-bottom:1px solid rgba(255,255,255,.05)}
+    .navlinks a::after{display:none}
+    .navlinks a:last-child{border-bottom:none}
+    .navlinks .navcta{border:none;background:var(--gold-soft);color:var(--gold-2);margin:6px 0 0}
+    .burger.active span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+    .burger.active span:nth-child(2){opacity:0}
+    .burger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+    .burger span{transition:.3s}
   }
   @media(max-width:560px){
     .wrap{padding:0 20px}
@@ -262,7 +278,7 @@
     <a href="#surgery">Surgery</a>
     <a href="#contact" class="navcta">Book a Consult</a>
   </nav>
-  <div class="burger" onclick="document.querySelector('.navlinks').style.display = (getComputedStyle(document.querySelector('.navlinks')).display==='none'?'flex':'none')"><span></span><span></span><span></span></div>
+  <div class="burger" id="burger"><span></span><span></span><span></span></div>
 </header>
 
 <!-- HERO -->
@@ -572,8 +588,11 @@ document.querySelectorAll('.filterbar button').forEach(b=>{
   });
 });
 
-/* ---------- nav + reveal ---------- */
+/* ---------- nav + mobile menu + reveal ---------- */
 const nav=document.getElementById('nav');
+const burger=document.getElementById('burger');
+burger.addEventListener('click',()=>{nav.classList.toggle('menu-open');burger.classList.toggle('active');});
+document.querySelectorAll('.navlinks a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('menu-open');burger.classList.remove('active');}));
 addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40));
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.12});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
